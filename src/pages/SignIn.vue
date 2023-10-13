@@ -13,9 +13,15 @@ const globalState = inject<GlobalState>("globalState");
 
 const router = useRouter();
 
-const state = reactive({ error: "", data: { username: "", password: "" } });
+const state = reactive({
+  error: "",
+  loading: false,
+  data: { username: "", password: "" },
+});
 
 async function handleSubmit(): Promise<void> {
+  state.loading = true;
+
   try {
     const response = await api.post<{ accessToken: string }>(
       "/sessions",
@@ -27,6 +33,8 @@ async function handleSubmit(): Promise<void> {
     router.push("/");
   } catch (error) {
     state.error = (error as Error).message;
+  } finally {
+    state.loading = false;
   }
 }
 </script>
@@ -44,14 +52,16 @@ async function handleSubmit(): Promise<void> {
           label="Usuário"
           :value="state.data.username"
           @update:value="(value) => (state.data.username = value)"
+          :disabled="state.loading"
         />
         <TextField
           type="password"
           label="Senha"
           :value="state.data.password"
           @update:value="(value) => (state.data.password = value)"
+          :disabled="state.loading"
         />
-        <Button @click="handleSubmit">Entrar</Button>
+        <Button @click="handleSubmit" :disabled="state.loading">Entrar</Button>
       </div>
     </div>
   </div>
