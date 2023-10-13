@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { useRouter } from "vue-router";
 import type { GlobalState } from "../App.vue";
 import TextField from "../components/TextField.vue";
@@ -18,6 +18,8 @@ const state = reactive({
   loading: false,
   data: { username: "", password: "" },
 });
+
+onMounted(() => globalState.accessToken && router.push("/"));
 
 async function handleSubmit(): Promise<void> {
   state.loading = true;
