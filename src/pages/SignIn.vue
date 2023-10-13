@@ -55,6 +55,7 @@ async function handleSubmit(): Promise<void> {
           :value="state.data.username"
           @update:value="(value) => (state.data.username = value)"
           :disabled="state.loading"
+          autocapitalize="off"
         />
         <TextField
           type="password"
