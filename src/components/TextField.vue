@@ -2,9 +2,11 @@
 defineProps<{
   label: string;
   value: string;
-  type: "text" | "password";
+  type: "text" | "password" | "number";
   disabled?: boolean;
   placeholder?: string;
+  inputmode?: "numeric";
+  autocapitalize?: "off";
 }>();
 
 defineEmits<{ (event: "update:value", value: string): void }>();
@@ -20,6 +22,8 @@ defineEmits<{ (event: "update:value", value: string): void }>();
       @input="$emit('update:value', ($event.target as HTMLInputElement).value)"
       :disabled="disabled"
       :placeholder="placeholder"
+      :inputmode="inputmode"
+      :autocapitalize="autocapitalize"
     />
   </div>
 </template>
