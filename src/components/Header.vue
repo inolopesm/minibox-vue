@@ -4,9 +4,11 @@ import Button from "./Button.vue";
 import Typography from "./Typography.vue";
 
 const props = withDefaults(
-  defineProps<{ goBackTo?: string; loading?: boolean }>(),
-  { goBackTo: "" }
+  defineProps<{ goBackTo?: string; loading?: boolean; right?: string }>(),
+  { goBackTo: "", right: "" }
 );
+
+defineEmits<{ (event: "click:right"): void }>();
 
 const router = useRouter();
 
@@ -29,6 +31,10 @@ function goBack() {
     <div class="flex w-1/3 justify-center">
       <Typography variant="h6">Minibox</Typography>
     </div>
-    <div class="w-1/3"></div>
+    <div class="flex w-1/3 justify-end">
+      <Button variant="tertiary" v-if="right" @click="$emit('click:right')">
+        {{ right }}
+      </Button>
+    </div>
   </div>
 </template>

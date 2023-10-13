@@ -9,6 +9,7 @@ import Link from "../components/Link.vue";
 import TextField from "../components/TextField.vue";
 import { formatMoney, inject } from "../utils";
 import api from "../services/api";
+import Alert from "../components/Alert.vue";
 
 const globalState = inject<GlobalState>("globalState");
 
@@ -48,11 +49,19 @@ watch(
 function goToEditProductPage(productId: number): void {
   router.push(`/cardapio/${productId}/editar`);
 }
+
+function goToCreateProductPage(): void {
+  router.push(`/cardapio/criar`);
+}
 </script>
 
 <template>
   <Layout>
-    <Header goBackTo="/"></Header>
+    <Header
+      goBackTo="/"
+      right="Criar"
+      @click:right="goToCreateProductPage"
+    ></Header>
     <div class="flex-grow px-6 py-12">
       <div class="mb-6">
         <TextField
@@ -64,8 +73,9 @@ function goToEditProductPage(productId: number): void {
           placeholder="Cuscuz com Ovo"
         />
       </div>
-      <div class="flex h-full items-center justify-center">
+      <div class="flex w-full flex-col items-center">
         <div v-if="state.loading">Carregando...</div>
+        <Alert variant="error" v-else-if="state.error">{{ state.error }}</Alert>
         <div v-else-if="state.products.length === 0">
           Nenhum produto encontrado
         </div>
@@ -85,7 +95,7 @@ function goToEditProductPage(productId: number): void {
               </Link>
             </td>
             <td class="border-t border-t-gray-200 p-4">
-              {{ formatMoney(product.value) }}
+              {{ formatMoney(product.value / 100) }}
             </td>
           </tr>
         </tbody>
