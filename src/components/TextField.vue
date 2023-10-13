@@ -4,6 +4,7 @@ defineProps<{
   value: string;
   type: "text" | "password";
   disabled?: boolean;
+  placeholder?: string;
 }>();
 
 defineEmits<{ (event: "update:value", value: string): void }>();
@@ -18,6 +19,7 @@ defineEmits<{ (event: "update:value", value: string): void }>();
       :value="value"
       @input="$emit('update:value', ($event.target as HTMLInputElement).value)"
       :disabled="disabled"
+      :placeholder="placeholder"
     />
   </div>
 </template>
