@@ -29,7 +29,7 @@ function goToMenu() {
     <div class="flex flex-grow flex-col justify-center px-6 py-12">
       <div class="flex flex-col gap-2">
         <Button @click="goToMenu">Cardápio</Button>
-        <Button>Fiados</Button>
+        <Button disabled>Fiados</Button>
         <Button variant="secondary" @click="handleLogout">Sair</Button>
       </div>
     </div>
