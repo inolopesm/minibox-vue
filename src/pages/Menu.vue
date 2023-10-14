@@ -27,7 +27,7 @@ onMounted(() => !globalState.accessToken && router.push("/entrar"));
 onMounted(() =>
   api("/products", { headers: { "x-access-token": globalState.accessToken } })
     .then((response) => (state.products = response.data))
-    .catch((error) => (state.error = error))
+    .catch((error) => (state.error = error.message))
     .finally(() => (state.loading = false))
 );
 
@@ -41,7 +41,7 @@ watch(
       params: { name },
     })
       .then((response) => (state.products = response.data))
-      .catch((error) => (state.error = error))
+      .catch((error) => (state.error = error.message))
       .finally(() => (state.loading = false));
   }, 500)
 );
